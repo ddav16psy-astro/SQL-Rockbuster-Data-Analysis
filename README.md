@@ -11,6 +11,6 @@ Which movies contributed the most/least revenues? What was the average rental du
 - Tableau Public
 
 ## Data
-CareerFoundry-provided relational database (Rockbuster) with fictitious data. Database schema: (add ERD link)
+CareerFoundry-provided relational database (Rockbuster) with fictitious data. Database schema: (Data Dictionary.pdf)
 
 ## Final report with visualizations: [Rockbuster Data Analysis Project](https://public.tableau.com/views/RockbusterDataAnalysis_17422791959400/RockbusterDataAnalysis?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
