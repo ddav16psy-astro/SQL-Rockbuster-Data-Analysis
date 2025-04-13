@@ -48,8 +48,8 @@ WITH top_5_customer_country_cte (country, all_customer_count, top_customer_count
               GROUP BY W.country
               ORDER BY top_customer_count DESC)
 SELECT country,
-	     all_customer_count,
-	     top_customer_count
+       all_customer_count,
+       top_customer_count
 FROM top_5_customer_country_cte
 GROUP BY country, all_customer_count, top_customer_count
 ORDER BY top_customer_count DESC
