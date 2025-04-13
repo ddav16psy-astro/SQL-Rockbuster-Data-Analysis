@@ -32,16 +32,16 @@ WITH top_5_customer_country_cte (country, all_customer_count, top_customer_count
 	                   /*Subquery to get the top ten countries with the
 	                      most customers*/
                               (SELECT D.country
-	                             FROM customer A
-	                             INNER JOIN address B ON A.address_id = B.address_id
-	                             INNER JOIN city C ON B.city_id = C.city_id
-	                             INNER JOIN country D ON C.country_id = D.country_id
-	                             GROUP BY country
-	                             ORDER BY COUNT(A.customer_id) DESC
-	                             LIMIT 10)
-	                      GROUP BY C.city
-		                    ORDER BY COUNT(A.customer_id) DESC
-		                    LIMIT 10)
+	                       FROM customer A
+	                       INNER JOIN address B ON A.address_id = B.address_id
+	                       INNER JOIN city C ON B.city_id = C.city_id
+	                       INNER JOIN country D ON C.country_id = D.country_id
+	                       GROUP BY country
+	                       ORDER BY COUNT(A.customer_id) DESC
+	                       LIMIT 10)
+	                GROUP BY C.city
+		        ORDER BY COUNT(A.customer_id) DESC
+		        LIMIT 10)
                     GROUP BY B.customer_id, E.country, D.city
                     ORDER BY SUM(A.amount) DESC
                     LIMIT 5) AS top_5_customers ON W.country = top_5_customers.country
