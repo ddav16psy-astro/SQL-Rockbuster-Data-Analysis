@@ -1,0 +1,115 @@
+-- Insert data into a table column
+INSERT INTO category(name)
+VALUES('Thriller'),
+      ('Crime'),
+      ('Mystery');
+
+-- Update column values for filtered rows
+UPDATE film_category
+SET category_id = 17
+WHERE film_id = 5;
+
+-- Delete specified records
+DELETE FROM category
+WHERE name = 'Mystery';
+
+-- Create a table
+CREATE TABLE test_employees
+(
+employee_id INT NOT NULL,
+name VARCHAR(50),
+contact_number VARCHAR(30),
+designation_id INT,
+last_update TIMESTAMP NOT NULL DEFAULT now(),
+CONSTRAINT employee_pkey PRIMARY KEY (employee_id)
+);
+
+/*Output the query plan to understand and
+  optimize performance for a prospective query*/
+EXPLAIN
+SELECT *
+FROM film;
+
+/*Sort query results specifying the sorting
+  order for each row*/
+SELECT rating,
+       MIN(replacement_cost) AS minimum_replacement_cost,
+       MAX(replacement_cost) AS maximum_replacement_cost
+FROM film
+GROUP BY rating
+ORDER BY CASE WHEN rating = 'G' THEN 1
+              WHEN rating = 'PG' THEN 2
+              WHEN rating = 'PG-13' THEN 3
+              WHEN rating = 'R' THEN 4
+              ELSE 5
+         END;
+
+-- Query using wilcards
+SELECT film_id, title, description
+FROM film
+WHERE title LIKE '%Uptown%';
+
+-- Query with two filters
+SELECT film_id,
+       title,
+       length AS movie_length_in_minutes,
+       rental_rate
+FROM film
+WHERE length > 120
+AND rental_rate > 2.99;
+
+/*Query descriptive stats for a
+  specified grouping and filter*/
+SELECT rating,
+       COUNT(film_id) AS count_of_movies,
+       AVG(rental_rate) AS average_movie_rental_rate,
+       MAX(rental_duration) AS maximum_rental_duration,
+       MIN(rental_duration) AS minimum_rental_duration
+FROM film
+GROUP BY rating
+HAVING rating IN ('PG', 'G');
+
+-- Cleaning prep: check for duplicate data
+SELECT title,
+       description,
+       release_year,
+       language_id,
+       length,
+       COUNT(*)
+FROM film
+GROUP BY title,
+         description,
+         release_year,
+         language_id,
+         length
+HAVING COUNT(*) > 1;
+
+-- Cleaning prep: check for non-uniform data
+SELECT DISTINCT release_year
+FROM film;
+
+-- Cleaning prep: check for non-uniform data
+SELECT DISTINCT SPLIT_PART(email, '@', 2) AS domain
+FROM customer;
+
+-- Cleaning prep: check for non-uniform data
+SELECT email
+FROM customer
+WHERE email NOT LIKE '%@sakilacustomer.org';
+
+-- Cleaning prep: check for missing data
+SELECT *
+FROM customer
+WHERE NULL IN (store_id,
+               first_name,
+               last_name,
+               email,
+               address_id,
+               activebool,
+               create_date,
+               active);
+
+-- Stats: output the modal value
+SELECT MODE() WITHIN GROUP (ORDER BY rating)
+       AS modal_value
+FROM film;
